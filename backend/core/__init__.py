@@ -1,11 +1,15 @@
-from flask import Flask
-from flask_jwt_extended import JWTManager
-
 from core import settings
-from core.db import db
-from core.dicom import product_blueprint
 from core.auth import auth_blueprint
 from core.auth.utils import create_user
+from core.db import db
+from core.dicom import dicom_blueprint
+from flask import Flask
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
+
+
+def init_cors_config(app):
+    CORS().init_app(app, support_credentials=True)
 
 
 def init_users(app):
@@ -18,7 +22,7 @@ def init_auth(app):
 
 
 def register_blueprints(app):
-    app.register_blueprint(product_blueprint)
+    app.register_blueprint(dicom_blueprint)
     app.register_blueprint(auth_blueprint)
 
 
@@ -41,9 +45,12 @@ def create_app():
     app = Flask(__name__)
 
     init_configuration(app)
+
     init_db(app)
     register_blueprints(app)
 
+    init_cors_config(app)
+    init_auth(app)
     init_users(app)
 
     return app

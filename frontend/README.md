@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+This is a basic DICOM viewer that uses DWV.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Currently, DMW works, but most features are buggy as far as my experience goes.
 
-Currently, two official plugins are available:
+## Notes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- This project uses: Vite as a bundler, Bun as a runtime and package manager, Typescript, React, Redux & Redix-toolkit.
+- This project uses a domain driven design, each feature in encapsulated in its own working directory.
+- Currently, we can't zoom (zoom not working in DMW with me for some reason) nor rotate, there're solutions but they are complex and need time.
+    - Implement our own DICOM viewer
 
-## Expanding the ESLint configuration
+## Reflection
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Design decisions
+1. DMW was selected because of the feedback on cornerstone.js
+2. Redux-toolkit to save time using Redux.
+3. Typescript for catch early bugs.
+4. Bun because it saves installation time by more than 90%.
+5. Axios shares the token through interceptors.
+6. Everything uses Functional components + hooks. 
+7. The app uses domain driven design, everything is driven by business, specially the directory structuring.
+8. Each feature has its own components/slices/reducers/actions.
 
-- Configure the top-level `parserOptions` property like this:
+### Optimizations
+1. The DMW loads some urls, currently I used `usePrevious` to check if the urls update, if they don't, we don't render.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Security considerations
+1. CORS currently is a wildcard, anyone passes through the walls
+2. Filenames are validated & secured
+3. JWT is used as an authentication method.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Comments
+1. Something will take time, I intentionally put a TODO there to point them out.
+2. Eslint was untouched, however, my preferred eslint config is a one I deployed [here](https://www.npmjs.com/package/@leondaz/eslint-config)
+3. No error handling is provided at the moment
+
+
+### Intentionally, the code was meant to be checked for quality problems.

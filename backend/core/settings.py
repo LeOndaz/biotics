@@ -1,21 +1,31 @@
-# import os
+import os
 from pathlib import Path
 
-# TODO: Everything should be in .env
+from dotenv import load_dotenv
 
-# from dotenv import load_dotenv
-# load_dotenv("./../.env")
+ROOT_DIR = Path(".").parent.resolve()
 
-# UPLOAD_PATH = Path(os.getenv("UPLOAD_PATH", "./uploads"))
-# UPLOAD_PATH.mkdir(exist_ok=True)
-UPLOAD_PATH = Path("./uploads")
+ENV_PATH = ROOT_DIR / ".env"
 
-# DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASE_URL = "sqlite:///../db.sqlite3"
-JWT_SECRET = "MY_JWT_SECRET"
-PASSWORD_SALT_LENGTH = 200
+load_dotenv(ENV_PATH.resolve())
+
+UPLOAD_PATH = Path(os.getenv("UPLOAD_PATH", "./uploads")).resolve()
+UPLOAD_PATH.mkdir(exist_ok=True)
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL is None:
     raise ValueError("environment variable DATABASE_URL must be set")
 
+JWT_SECRET = os.getenv("JWT_SECRET")
+
+if JWT_SECRET is None:
+    raise ValueError("environment variable JWT_SECRET must be set")
+
+if len(JWT_SECRET) < 32:
+    raise ValueError("environment variable JWT_SECRET must have length greater than or equal 32")
+
+
+# no need to override for now
+PASSWORD_SALT_LENGTH = 200
 MAX_FILE_SIZE = 10 * 1024 * 1024

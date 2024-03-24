@@ -390,5 +390,6 @@ pyrightconfig.json
 
 .DS_Store
 .idea
+uploads
 
 # End of https://www.toptal.com/developers/gitignore/api/web,pycharm,python,flask

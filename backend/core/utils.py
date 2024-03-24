@@ -14,4 +14,4 @@ def is_allowed_filename(filename):
 
 
 def get_upload_path(path):
-    return Path(settings.UPLOAD_PATH) / Path(path)
+    return str(Path(settings.UPLOAD_PATH) / Path(path).resolve())

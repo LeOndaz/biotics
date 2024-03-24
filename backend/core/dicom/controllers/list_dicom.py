@@ -1,9 +1,13 @@
 from flask_restful import Resource
 
+from core.dicom.dto import dicom_dto
 from core.dicom.models import DICOMFile
 
 
 class DICOMFileList(Resource):
     def get(self):
+        # TODO: should support pagination
         files = DICOMFile.query.all()
-        return [{'id': file.id, 'path': file.file_path} for file in files]
+        return [
+            dicom_dto(file) for file in files
+        ]
