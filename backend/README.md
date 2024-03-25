@@ -32,3 +32,8 @@
 
 ### Comments
 1. Something will take time, I intentionally put a TODO there to point them out.
+
+
+## Get running
+- `pip install -r requirements.txt`
+- `python app.py`

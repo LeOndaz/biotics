@@ -36,3 +36,7 @@ Currently, DMW works, but most features are buggy as far as my experience goes.
 
 
 ### Intentionally, the code was meant to be checked for quality problems.
+
+
+## Get running
+- ``bun dev``, or `npm run dev`
