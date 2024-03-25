@@ -3,6 +3,7 @@ import {useDeferredState} from "../../../hooks/useDeferredState.ts";
 import * as dicomService from "../service.ts";
 import FileUpload from "../../../components/FileUpload/FileUpload.tsx";
 import {useSetUrls} from "../hooks.ts";
+import {DicomFile} from "../../../typing/api.ts";
 
 const DicomForm = () => {
   const setUrls = useSetUrls();
@@ -14,7 +15,7 @@ const DicomForm = () => {
     })
   
     // TODO: FIX TYPE, not by manually creating types, but by having a swagger file for the API + autogen
-    const urls = files.map(file => file.url);
+    const urls = files.map((file: DicomFile) => file.url);
     setUrls(urls);
     
     return urls
